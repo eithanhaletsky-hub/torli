@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
-import { generateSlug, getCategoryConfig } from "@/lib/utils";
+import { generateSlug } from "@/lib/utils";
 
 export async function POST(req: Request) {
   try {
@@ -27,8 +27,6 @@ export async function POST(req: Request) {
       slug = `${slug}-${Date.now().toString(36)}`;
     }
 
-    const catConfig = getCategoryConfig(category || "salon");
-
     const user = await prisma.user.create({
       data: {
         name,
@@ -50,15 +48,7 @@ export async function POST(req: Request) {
                 { dayOfWeek: 6, startTime: "09:00", endTime: "18:00", isOpen: false },
               ],
             },
-            services: {
-              create: catConfig.defaultServices.map((s, i) => ({
-                name: s.name,
-                duration: s.duration,
-                price: s.price,
-                color: s.color,
-                sortOrder: i,
-              })),
-            },
+            services: { create: [] },
           },
         },
       },
