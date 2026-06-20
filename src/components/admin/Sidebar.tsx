@@ -8,6 +8,7 @@ import {
   Calendar,
   Users,
   Scissors,
+  FileEdit,
   Settings,
   LogOut,
   ExternalLink,
@@ -22,6 +23,7 @@ const navItems = [
   { href: "/calendar", label: "יומן", icon: Calendar },
   { href: "/clients", label: "לקוחות", icon: Users },
   { href: "/services", label: "שירותים", icon: Scissors },
+  { href: "/booking-editor", label: "דף הזמנה", icon: FileEdit },
   { href: "/settings", label: "הגדרות", icon: Settings },
 ];
 

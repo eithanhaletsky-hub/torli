@@ -28,6 +28,9 @@ model Business {
   logoUrl     String?
   coverUrl    String?
   primaryColor String  @default("#6366f1")
+  bookingFields Json?
+  bookingTitle  String?
+  bookingSuccessMsg String?
   ownerId     String   @unique
   owner       User     @relation(fields: [ownerId], references: [id])
   createdAt   DateTime @default(now())

@@ -21,6 +21,9 @@ export async function GET(
 
   const catConfig = getCategoryConfig(business.category);
 
+  const customFields = business.bookingFields as unknown[];
+  const hasCustomFields = Array.isArray(customFields) && customFields.length > 0;
+
   return NextResponse.json({
     id: business.id,
     name: business.name,
@@ -34,11 +37,11 @@ export async function GET(
     categoryConfig: {
       clientTerm: catConfig.clientTerm,
       appointmentTerm: catConfig.appointmentTerm,
-      serviceLabel: catConfig.serviceLabel,
+      serviceLabel: business.bookingTitle || catConfig.serviceLabel,
       dateLabel: catConfig.dateLabel,
       detailsLabel: catConfig.detailsLabel,
-      successMessage: catConfig.successMessage,
-      bookingFields: catConfig.bookingFields,
+      successMessage: business.bookingSuccessMsg || catConfig.successMessage,
+      bookingFields: hasCustomFields ? customFields : catConfig.bookingFields,
     },
   });
 }
