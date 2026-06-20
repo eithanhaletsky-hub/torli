@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  business     Business?
+}
+
+model Business {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  category    String   @default("salon") // salon, clinic, beauty, fitness, therapy, consulting
+  description String?
+  phone       String?
+  address     String?
+  logoUrl     String?
+  coverUrl    String?
+  primaryColor String  @default("#6366f1")
+  ownerId     String   @unique
+  owner       User     @relation(fields: [ownerId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  services      Service[]
+  clients       Client[]
+  appointments  Appointment[]
+  businessHours BusinessHours[]
+  blockedSlots  BlockedSlot[]
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  duration    Int      // minutes
+  price       Float
+  color       String   @default("#6366f1")
+  isActive    Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  businessId  String
+  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  appointments Appointment[]
+}
+
+model Client {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String
+  email     String?
+  notes     String?
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  appointments Appointment[]
+
+  @@unique([phone, businessId])
+}
+
+model Appointment {
+  id         String   @id @default(cuid())
+  date       DateTime
+  endDate    DateTime
+  status     String   @default("pending") // pending, confirmed, completed, cancelled, noshow
+  notes      String?
+  clientName  String
+  clientPhone String
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  serviceId  String
+  service    Service  @relation(fields: [serviceId], references: [id])
+  clientId   String?
+  client     Client?  @relation(fields: [clientId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model BusinessHours {
+  id         String  @id @default(cuid())
+  dayOfWeek  Int     // 0=Sunday, 6=Saturday
+  startTime  String  // "09:00"
+  endTime    String  // "18:00"
+  isOpen     Boolean @default(true)
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@unique([businessId, dayOfWeek])
+}
+
+model BlockedSlot {
+  id         String   @id @default(cuid())
+  date       DateTime
+  endDate    DateTime
+  reason     String?
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+}
