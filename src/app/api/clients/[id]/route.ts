@@ -25,6 +25,7 @@ export async function GET(
   const client = await prisma.client.findFirst({
     where: { id, businessId },
     include: {
+      _count: { select: { appointments: true } },
       appointments: {
         include: { service: true },
         orderBy: { date: "desc" },

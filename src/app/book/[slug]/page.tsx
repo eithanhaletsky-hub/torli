@@ -56,10 +56,14 @@ export default function BookingPage() {
   const [loadingSlots, setLoadingSlots] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [notFound, setNotFound] = useState(false);
   const [calendarMonth, setCalendarMonth] = useState(new Date());
 
   useEffect(() => {
-    fetch(`/api/booking/${slug}`).then(r => r.json()).then(setBusiness);
+    fetch(`/api/booking/${slug}`).then(r => {
+      if (!r.ok) { setNotFound(true); return null; }
+      return r.json();
+    }).then(data => { if (data) setBusiness(data); });
   }, [slug]);
 
   useEffect(() => {
@@ -139,6 +143,18 @@ export default function BookingPage() {
       setError(body.error || "שגיאה בהזמנה");
     }
     setSubmitting(false);
+  }
+
+  if (notFound) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" dir="rtl">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-gray-300 mb-4">404</h1>
+          <p className="text-gray-500 mb-6">העסק לא נמצא</p>
+          <a href="/" className="text-primary-600 hover:underline">חזרה לדף הראשי</a>
+        </div>
+      </div>
+    );
   }
 
   if (!business) {
