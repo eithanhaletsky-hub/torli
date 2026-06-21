@@ -58,7 +58,7 @@ export default async function Home() {
   ];
 
   const categories = [
-    { icon: "✂️", label: "מספרות וסלונים", slug: "salon-demo" },
+    { icon: "🧠", label: "טיפול נפשי / פסיכולוגיה", slug: "psychology-demo" },
     { icon: "🏥", label: "קליניקות רפואיות", slug: "clinic-demo" },
     { icon: "💅", label: "טיפולי יופי", slug: "beauty-demo" },
     { icon: "💪", label: "מאמני כושר", slug: "fitness-demo" },

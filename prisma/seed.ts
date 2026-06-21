@@ -5,21 +5,21 @@ const prisma = new PrismaClient();
 
 const businesses = [
   {
-    email: "salon@torli.co.il",
-    ownerName: "יוסי כהן",
-    name: "המספרה של יוסי",
-    slug: "salon-demo",
-    category: "salon",
-    description: "מספרה מקצועית לגברים ונשים",
+    email: "psychology@torli.co.il",
+    ownerName: "ד״ר נעמי גולן",
+    name: "ד״ר נעמי גולן - פסיכולוגית קלינית",
+    slug: "psychology-demo",
+    category: "psychology",
+    description: "טיפול פסיכולוגי פרטני, זוגי ומשפחתי",
     phone: "050-1234567",
     address: "רחוב הרצל 15, תל אביב",
     primaryColor: "#6366f1",
     services: [
-      { name: "תספורת גברים", description: "כולל שטיפה ועיצוב", duration: 30, price: 80, color: "#6366f1", sortOrder: 0 },
-      { name: "תספורת נשים", description: "תספורת + פן", duration: 45, price: 120, color: "#ec4899", sortOrder: 1 },
-      { name: "צבע שיער", description: "צביעה מלאה", duration: 90, price: 250, color: "#f59e0b", sortOrder: 2 },
-      { name: "תספורת ילדים", description: "עד גיל 12", duration: 20, price: 50, color: "#10b981", sortOrder: 3 },
-      { name: "עיצוב זקן", duration: 15, price: 40, color: "#8b5cf6", sortOrder: 4 },
+      { name: "פגישת היכרות", description: "פגישה ראשונית להכרות ואבחון", duration: 50, price: 350, color: "#6366f1", sortOrder: 0 },
+      { name: "טיפול פרטני", description: "פגישה טיפולית שבועית", duration: 50, price: 450, color: "#3b82f6", sortOrder: 1 },
+      { name: "טיפול זוגי", description: "טיפול לזוגות", duration: 75, price: 550, color: "#ec4899", sortOrder: 2 },
+      { name: "ייעוץ הורים", description: "הדרכת הורים", duration: 50, price: 400, color: "#10b981", sortOrder: 3 },
+      { name: "אבחון פסיכולוגי", description: "אבחון מקיף", duration: 90, price: 800, color: "#f59e0b", sortOrder: 4 },
     ],
   },
   {

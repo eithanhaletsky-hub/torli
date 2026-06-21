@@ -36,7 +36,7 @@ export async function POST(req: Request) {
           create: {
             name: businessName,
             slug,
-            category: category || "salon",
+            category: category || "consulting",
             businessHours: {
               create: [
                 { dayOfWeek: 0, startTime: "09:00", endTime: "18:00", isOpen: true },

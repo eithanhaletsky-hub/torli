@@ -85,29 +85,38 @@ export interface CategoryConfig {
 }
 
 export const CATEGORIES: Record<string, CategoryConfig> = {
-  salon: {
-    id: "salon",
-    label: "מספרה / סלון",
-    icon: "✂️",
-    clientTerm: "לקוח",
-    clientTermPlural: "לקוחות",
-    appointmentTerm: "תור",
-    appointmentTermPlural: "תורים",
-    serviceLabel: "בחר טיפול",
-    dateLabel: "בחר תאריך ושעה",
-    detailsLabel: "פרטי הלקוח",
-    successMessage: "התור נקבע בהצלחה! נתראה בסלון",
+  psychology: {
+    id: "psychology",
+    label: "טיפול נפשי / פסיכולוגיה",
+    icon: "🧠",
+    clientTerm: "מטופל",
+    clientTermPlural: "מטופלים",
+    appointmentTerm: "פגישה",
+    appointmentTermPlural: "פגישות",
+    serviceLabel: "בחר סוג טיפול",
+    dateLabel: "בחר תאריך ושעה לפגישה",
+    detailsLabel: "פרטי המטופל",
+    successMessage: "הפגישה נקבעה בהצלחה! נא להגיע בזמן",
     defaultServices: [
-      { name: "תספורת גברים", duration: 30, price: 80, color: "#6366f1" },
-      { name: "תספורת נשים", duration: 45, price: 120, color: "#ec4899" },
-      { name: "צבע שיער", duration: 90, price: 250, color: "#f59e0b" },
-      { name: "תספורת ילדים", duration: 20, price: 50, color: "#10b981" },
-      { name: "עיצוב זקן", duration: 15, price: 40, color: "#8b5cf6" },
+      { name: "פגישת היכרות", duration: 50, price: 350, color: "#6366f1" },
+      { name: "טיפול פרטני", duration: 50, price: 450, color: "#3b82f6" },
+      { name: "טיפול זוגי", duration: 75, price: 550, color: "#ec4899" },
+      { name: "ייעוץ הורים", duration: 50, price: 400, color: "#10b981" },
+      { name: "אבחון פסיכולוגי", duration: 90, price: 800, color: "#f59e0b" },
     ],
     bookingFields: [
-      { id: "clientName", label: "שם מלא", type: "text", required: true, placeholder: "ישראל ישראלי" },
+      { id: "clientName", label: "שם מלא", type: "text", required: true, placeholder: "שם מלא" },
       { id: "clientPhone", label: "טלפון", type: "tel", required: true, placeholder: "050-1234567" },
-      { id: "notes", label: "הערות (סגנון מועדף, בקשות מיוחדות)", type: "textarea", required: false, placeholder: "למשל: תספורת קצרה בצדדים, ארוך למעלה" },
+      { id: "age", label: "גיל", type: "text", required: false, placeholder: "למשל: 35" },
+      { id: "referralSource", label: "הגעת דרך", type: "select", required: false, options: [
+        { value: "", label: "בחר" },
+        { value: "doctor", label: "הפניית רופא" },
+        { value: "internet", label: "אינטרנט" },
+        { value: "friend", label: "חבר/משפחה" },
+        { value: "insurance", label: "קופת חולים" },
+        { value: "returning", label: "מטופל חוזר" },
+      ]},
+      { id: "notes", label: "נושא הפנייה (אופציונלי)", type: "textarea", required: false, placeholder: "במה תרצה/י שנתמקד?" },
     ],
   },
   clinic: {
@@ -291,5 +300,5 @@ export const CATEGORIES: Record<string, CategoryConfig> = {
 };
 
 export function getCategoryConfig(category: string): CategoryConfig {
-  return CATEGORIES[category] || CATEGORIES.salon;
+  return CATEGORIES[category] || CATEGORIES.consulting;
 }
