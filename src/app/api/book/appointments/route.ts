@@ -1,13 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-export async function POST(
-  req: Request,
-  { params }: { params: Promise<{ slug: string }> }
-) {
-  const { slug } = await params;
-
-  const business = await prisma.business.findUnique({ where: { slug } });
+export async function POST(req: Request) {
+  const business = await prisma.business.findFirst();
   if (!business)
     return NextResponse.json({ error: "עסק לא נמצא" }, { status: 404 });
 

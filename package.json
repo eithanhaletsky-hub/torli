@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "db:push": "prisma db push",
-    "db:seed": "tsx prisma/seed.ts",
+    "setup": "prisma db push && tsx prisma/setup.ts",
     "db:studio": "prisma studio",
     "postinstall": "prisma generate"
   },

@@ -1,11 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-export async function GET(
-  req: Request,
-  { params }: { params: Promise<{ slug: string }> }
-) {
-  const { slug } = await params;
+export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const dateStr = searchParams.get("date");
   const serviceId = searchParams.get("serviceId");
@@ -13,8 +9,7 @@ export async function GET(
   if (!dateStr || !serviceId)
     return NextResponse.json({ error: "חסרים פרמטרים" }, { status: 400 });
 
-  const business = await prisma.business.findUnique({
-    where: { slug },
+  const business = await prisma.business.findFirst({
     include: { businessHours: true },
   });
   if (!business)

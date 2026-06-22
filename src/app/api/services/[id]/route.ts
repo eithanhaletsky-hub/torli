@@ -1,23 +1,12 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-
-async function getBusinessId() {
-  const session = await getServerSession(authOptions);
-  if (!session) return null;
-  const business = await prisma.business.findFirst({
-    where: { ownerId: session.user.id },
-    select: { id: true },
-  });
-  return business?.id || null;
-}
+import { requireBusinessId } from "@/lib/business";
 
 export async function PUT(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const businessId = await getBusinessId();
+  const businessId = await requireBusinessId();
   if (!businessId)
     return NextResponse.json({ error: "לא מורשה" }, { status: 401 });
 
@@ -35,7 +24,7 @@ export async function DELETE(
   _req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const businessId = await getBusinessId();
+  const businessId = await requireBusinessId();
   if (!businessId)
     return NextResponse.json({ error: "לא מורשה" }, { status: 401 });
 

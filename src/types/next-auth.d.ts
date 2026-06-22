@@ -6,13 +6,6 @@ declare module "next-auth" {
       id: string;
       email: string;
       name: string;
-      businessId?: string;
     };
-  }
-}
-
-declare module "next-auth/jwt" {
-  interface JWT {
-    businessId?: string;
   }
 }
