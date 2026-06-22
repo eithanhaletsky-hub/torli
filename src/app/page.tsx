@@ -58,11 +58,15 @@ export default async function Home() {
   ];
 
   const categories = [
+    { icon: "✂️", label: "ברברים ומספרות", slug: "barber-demo" },
     { icon: "🧠", label: "טיפול נפשי / פסיכולוגיה", slug: "psychology-demo" },
     { icon: "🏥", label: "קליניקות רפואיות", slug: "clinic-demo" },
-    { icon: "💅", label: "טיפולי יופי", slug: "beauty-demo" },
-    { icon: "💪", label: "מאמני כושר", slug: "fitness-demo" },
-    { icon: "🧘", label: "טיפולים אלטרנטיביים", slug: "therapy-demo" },
+    { icon: "💅", label: "קוסמטיקה — ציפורניים, ריסים, טיפולי פנים", slug: "beauty-demo" },
+    { icon: "💪", label: "מאמני כושר / פילאטיס ויוגה", slug: "fitness-demo" },
+    { icon: "📚", label: "מורים פרטיים", slug: "tutoring-demo" },
+    { icon: "🧘", label: "עיסוי וטיפולי גוף", slug: "therapy-demo" },
+    { icon: "🐾", label: "טיפוח כלבים / וטרינרים", slug: "pets-demo" },
+    { icon: "🔧", label: "מוסכים וטיפולי רכב", slug: "garage-demo" },
     { icon: "💼", label: "ייעוץ מקצועי", slug: "consulting-demo" },
   ];
 
