@@ -58,16 +58,16 @@ export default async function Home() {
   ];
 
   const categories = [
-    { icon: "✂️", label: "ברברים ומספרות", slug: "barber-demo" },
-    { icon: "🧠", label: "טיפול נפשי / פסיכולוגיה", slug: "psychology-demo" },
-    { icon: "🏥", label: "קליניקות רפואיות", slug: "clinic-demo" },
-    { icon: "💅", label: "קוסמטיקה — ציפורניים, ריסים, טיפולי פנים", slug: "beauty-demo" },
-    { icon: "💪", label: "מאמני כושר / פילאטיס ויוגה", slug: "fitness-demo" },
-    { icon: "📚", label: "מורים פרטיים", slug: "tutoring-demo" },
-    { icon: "🧘", label: "עיסוי וטיפולי גוף", slug: "therapy-demo" },
-    { icon: "🐾", label: "טיפוח כלבים / וטרינרים", slug: "pets-demo" },
-    { icon: "🔧", label: "מוסכים וטיפולי רכב", slug: "garage-demo" },
-    { icon: "💼", label: "ייעוץ מקצועי", slug: "consulting-demo" },
+    { icon: "✂️", label: "ברברים ומספרות" },
+    { icon: "🧠", label: "טיפול נפשי / פסיכולוגיה" },
+    { icon: "🏥", label: "קליניקות רפואיות" },
+    { icon: "💅", label: "קוסמטיקה — ציפורניים, ריסים, טיפולי פנים" },
+    { icon: "💪", label: "מאמני כושר / פילאטיס ויוגה" },
+    { icon: "📚", label: "מורים פרטיים" },
+    { icon: "🧘", label: "עיסוי וטיפולי גוף" },
+    { icon: "🐾", label: "טיפוח כלבים / וטרינרים" },
+    { icon: "🔧", label: "מוסכים וטיפולי רכב" },
+    { icon: "💼", label: "ייעוץ מקצועי" },
   ];
 
   return (
@@ -110,10 +110,10 @@ export default async function Home() {
               <ChevronLeft className="w-5 h-5" />
             </Link>
             <a
-              href="#demo"
+              href="#categories"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-gray-200 text-gray-700 rounded-2xl text-lg font-medium hover:border-gray-300 transition"
             >
-              ראה דוגמה חיה
+              לאילו עסקים מתאים?
             </a>
           </div>
           <div className="flex items-center justify-center gap-6 mt-8 text-sm text-gray-400">
@@ -149,7 +149,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="py-20 px-6" id="demo">
+      <section className="py-20 px-6" id="categories">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">מותאם לכל סוג עסק</h2>
@@ -157,19 +157,16 @@ export default async function Home() {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {categories.map((cat) => (
-              <Link
-                key={cat.slug}
-                href={`/book/${cat.slug}`}
-                target="_blank"
-                className="flex items-center gap-4 bg-white rounded-2xl p-5 border border-gray-100 hover:shadow-lg hover:border-primary-200 transition group"
+              <div
+                key={cat.label}
+                className="flex items-center gap-4 bg-white rounded-2xl p-5 border border-gray-100"
               >
                 <span className="text-3xl">{cat.icon}</span>
                 <div className="flex-1">
                   <h3 className="font-bold text-gray-900">{cat.label}</h3>
-                  <p className="text-sm text-gray-400">לחץ לדוגמה חיה</p>
+                  <p className="text-sm text-gray-400">שדות וטרמינולוגיה מותאמים</p>
                 </div>
-                <ChevronLeft className="w-5 h-5 text-gray-300 group-hover:text-primary-500 transition" />
-              </Link>
+              </div>
             ))}
           </div>
         </div>
