@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { Save, Plus, Trash2, GripVertical, Eye, ArrowUp, ArrowDown } from "lucide-react";
-import { type BookingField } from "@/lib/utils";
+import { getCategoryConfig, type BookingField } from "@/lib/utils";
 
 interface Business {
   name: string;
+  category: string;
+  slug: string;
   primaryColor: string;
   bookingFields: BookingField[] | null;
   bookingTitle: string | null;
@@ -27,24 +29,22 @@ export default function BookingEditorPage() {
   const [successMsg, setSuccessMsg] = useState("");
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
 
   useEffect(() => {
-    async function load() {
-      const [bizRes, configRes] = await Promise.all([
-        fetch("/api/business").then(r => r.json()),
-        fetch("/api/book").then(r => r.json()),
-      ]);
-      setBusiness(bizRes);
-      const defaultFields = configRes.categoryConfig?.bookingFields || [];
-      setFields(
-        bizRes.bookingFields && (bizRes.bookingFields as BookingField[]).length > 0
-          ? (bizRes.bookingFields as BookingField[])
-          : defaultFields
-      );
-      setBookingTitle(bizRes.bookingTitle || "");
-      setSuccessMsg(bizRes.bookingSuccessMsg || "");
-    }
-    load();
+    fetch("/api/business")
+      .then((r) => r.json())
+      .then((biz: Business) => {
+        setBusiness(biz);
+        const catConfig = getCategoryConfig(biz.category);
+        setFields(
+          biz.bookingFields && (biz.bookingFields as BookingField[]).length > 0
+            ? (biz.bookingFields as BookingField[])
+            : catConfig.bookingFields
+        );
+        setBookingTitle(biz.bookingTitle || "");
+        setSuccessMsg(biz.bookingSuccessMsg || "");
+      });
   }, []);
 
   function addField() {
@@ -116,11 +116,11 @@ export default function BookingEditorPage() {
   }
 
   function resetToDefaults() {
-    fetch("/api/book").then(r => r.json()).then(data => {
-      setFields(data.categoryConfig?.bookingFields || []);
-      setBookingTitle("");
-      setSuccessMsg("");
-    });
+    if (!business) return;
+    const catConfig = getCategoryConfig(business.category);
+    setFields(catConfig.bookingFields);
+    setBookingTitle("");
+    setSuccessMsg("");
   }
 
   if (!business) {
@@ -131,13 +131,15 @@ export default function BookingEditorPage() {
     );
   }
 
+  const catConfig = getCategoryConfig(business.category);
+
   return (
     <div className="max-w-3xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">עריכת דף הזמנה</h1>
         <div className="flex gap-2">
           <a
-            href="/"
+            href={`/book/${business.slug}`}
             target="_blank"
             className="flex items-center gap-2 px-4 py-2.5 border border-gray-200 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition"
           >
@@ -166,9 +168,12 @@ export default function BookingEditorPage() {
               <input
                 value={bookingTitle}
                 onChange={(e) => setBookingTitle(e.target.value)}
-                placeholder="בחר שירות"
+                placeholder={catConfig.serviceLabel}
                 className="w-full px-4 py-2.5 border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-primary-500"
               />
+              <p className="text-xs text-gray-400 mt-1">
+                השאר ריק להשתמש בברירת מחדל: &quot;{catConfig.serviceLabel}&quot;
+              </p>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -177,7 +182,7 @@ export default function BookingEditorPage() {
               <input
                 value={successMsg}
                 onChange={(e) => setSuccessMsg(e.target.value)}
-                placeholder="התור נקבע בהצלחה!"
+                placeholder={catConfig.successMessage}
                 className="w-full px-4 py-2.5 border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-primary-500"
               />
               <p className="text-xs text-gray-400 mt-1">

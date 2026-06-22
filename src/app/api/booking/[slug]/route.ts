@@ -1,9 +1,15 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getTerminology, getDefaultBookingFields } from "@/lib/config";
+import { getCategoryConfig } from "@/lib/utils";
 
-export async function GET() {
-  const business = await prisma.business.findFirst({
+export async function GET(
+  _req: Request,
+  { params }: { params: Promise<{ slug: string }> }
+) {
+  const { slug } = await params;
+
+  const business = await prisma.business.findUnique({
+    where: { slug },
     include: {
       services: { where: { isActive: true }, orderBy: { sortOrder: "asc" } },
       businessHours: { orderBy: { dayOfWeek: "asc" } },
@@ -13,7 +19,7 @@ export async function GET() {
   if (!business)
     return NextResponse.json({ error: "עסק לא נמצא" }, { status: 404 });
 
-  const terminology = getTerminology();
+  const catConfig = getCategoryConfig(business.category);
 
   const customFields = business.bookingFields as unknown[];
   const hasCustomFields = Array.isArray(customFields) && customFields.length > 0;
@@ -21,6 +27,7 @@ export async function GET() {
   return NextResponse.json({
     id: business.id,
     name: business.name,
+    category: business.category,
     description: business.description,
     phone: business.phone,
     address: business.address,
@@ -28,13 +35,13 @@ export async function GET() {
     services: business.services,
     businessHours: business.businessHours,
     categoryConfig: {
-      clientTerm: terminology.clientTerm,
-      appointmentTerm: terminology.appointmentTerm,
-      serviceLabel: business.bookingTitle || terminology.serviceLabel,
-      dateLabel: terminology.dateLabel,
-      detailsLabel: terminology.detailsLabel,
-      successMessage: business.bookingSuccessMsg || terminology.successMessage,
-      bookingFields: hasCustomFields ? customFields : getDefaultBookingFields(),
+      clientTerm: catConfig.clientTerm,
+      appointmentTerm: catConfig.appointmentTerm,
+      serviceLabel: business.bookingTitle || catConfig.serviceLabel,
+      dateLabel: catConfig.dateLabel,
+      detailsLabel: catConfig.detailsLabel,
+      successMessage: business.bookingSuccessMsg || catConfig.successMessage,
+      bookingFields: hasCustomFields ? customFields : catConfig.bookingFields,
     },
   });
 }

@@ -27,7 +27,7 @@ const navItems = [
   { href: "/settings", label: "הגדרות", icon: Settings },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ businessSlug }: { businessSlug?: string }) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -87,14 +87,16 @@ export default function Sidebar() {
         </nav>
 
         <div className="p-3 space-y-1 border-t border-gray-100">
-          <Link
-            href="/"
-            target="_blank"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition"
-          >
-            <ExternalLink className="w-5 h-5" />
-            דף ההזמנה שלי
-          </Link>
+          {businessSlug && (
+            <Link
+              href={`/book/${businessSlug}`}
+              target="_blank"
+              className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition"
+            >
+              <ExternalLink className="w-5 h-5" />
+              דף ההזמנה שלי
+            </Link>
+          )}
           <button
             onClick={() => signOut({ callbackUrl: "/login" })}
             className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-red-600 hover:bg-red-50 transition w-full"

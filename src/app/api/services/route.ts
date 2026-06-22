@@ -1,9 +1,20 @@
 import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { requireBusinessId } from "@/lib/business";
+
+async function getBusinessId() {
+  const session = await getServerSession(authOptions);
+  if (!session) return null;
+  const business = await prisma.business.findFirst({
+    where: { ownerId: session.user.id },
+    select: { id: true },
+  });
+  return business?.id || null;
+}
 
 export async function GET() {
-  const businessId = await requireBusinessId();
+  const businessId = await getBusinessId();
   if (!businessId) return NextResponse.json([], { status: 401 });
 
   const services = await prisma.service.findMany({
@@ -14,7 +25,7 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const businessId = await requireBusinessId();
+  const businessId = await getBusinessId();
   if (!businessId)
     return NextResponse.json({ error: "לא מורשה" }, { status: 401 });
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Save, Download, Copy, Check } from "lucide-react";
-import { getHebrewDayName } from "@/lib/utils";
+import { getHebrewDayName, CATEGORIES } from "@/lib/utils";
 
 interface BusinessHour {
   dayOfWeek: number;
@@ -13,9 +13,11 @@ interface BusinessHour {
 
 interface Business {
   name: string;
+  category: string;
   description: string | null;
   phone: string | null;
   address: string | null;
+  slug: string;
   primaryColor: string;
   businessHours: BusinessHour[];
   owner: { name: string; email: string };
@@ -42,6 +44,7 @@ export default function SettingsPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name: form.get("name"),
+        category: form.get("category"),
         description: form.get("description") || null,
         phone: form.get("phone") || null,
         address: form.get("address") || null,
@@ -67,8 +70,8 @@ export default function SettingsPage() {
   }
 
   function getBookingUrl() {
-    if (typeof window === "undefined") return "";
-    return window.location.origin;
+    if (typeof window === "undefined" || !business) return "";
+    return `${window.location.origin}/book/${business.slug}`;
   }
 
   async function copyLink() {
@@ -114,6 +117,14 @@ export default function SettingsPage() {
               <input name="name" defaultValue={business.name} required className="w-full px-4 py-2.5 border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-primary-500" />
             </div>
             <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">סוג העסק</label>
+              <select name="category" defaultValue={business.category} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 bg-white">
+                {Object.values(CATEGORIES).map((cat) => (
+                  <option key={cat.id} value={cat.id}>{cat.icon} {cat.label}</option>
+                ))}
+              </select>
+            </div>
+            <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">טלפון</label>
               <input name="phone" defaultValue={business.phone || ""} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-primary-500" />
             </div>
@@ -156,7 +167,7 @@ export default function SettingsPage() {
               <img src={qrUrl} alt="QR Code" className="w-[150px] h-[150px] rounded-xl border border-gray-200" />
               <a
                 href={qrUrl}
-                download="qr-booking.png"
+                download={`qr-${business.slug}.png`}
                 className="text-xs text-primary-600 hover:underline"
               >
                 הורד QR Code

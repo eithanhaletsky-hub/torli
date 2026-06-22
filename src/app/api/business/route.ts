@@ -8,6 +8,7 @@ export async function GET() {
   if (!session) return NextResponse.json({ error: "לא מורשה" }, { status: 401 });
 
   const business = await prisma.business.findFirst({
+    where: { ownerId: session.user.id },
     include: {
       businessHours: { orderBy: { dayOfWeek: "asc" } },
       owner: { select: { name: true, email: true } },
@@ -22,7 +23,9 @@ export async function PUT(req: Request) {
 
   const data = await req.json();
 
-  const business = await prisma.business.findFirst();
+  const business = await prisma.business.findFirst({
+    where: { ownerId: session.user.id },
+  });
   if (!business) return NextResponse.json({ error: "עסק לא נמצא" }, { status: 404 });
 
   if (data.businessHours) {
@@ -46,6 +49,7 @@ export async function PUT(req: Request) {
     where: { id: business.id },
     data: {
       name: data.name ?? business.name,
+      category: data.category ?? business.category,
       description: data.description ?? business.description,
       phone: data.phone ?? business.phone,
       address: data.address ?? business.address,

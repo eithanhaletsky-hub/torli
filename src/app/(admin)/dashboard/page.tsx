@@ -10,8 +10,7 @@ import {
   TrendingUp,
   AlertCircle,
 } from "lucide-react";
-import { formatPrice, getStatusLabel, getStatusColor } from "@/lib/utils";
-import { getTerminology } from "@/lib/config";
+import { formatPrice, getStatusLabel, getStatusColor, getCategoryConfig } from "@/lib/utils";
 import Link from "next/link";
 
 export default async function DashboardPage() {
@@ -19,11 +18,12 @@ export default async function DashboardPage() {
   if (!session) redirect("/login");
 
   const business = await prisma.business.findFirst({
+    where: { ownerId: session.user.id },
     include: { owner: { select: { name: true } } },
   });
   if (!business) redirect("/login");
 
-  const terminology = getTerminology();
+  const catConfig = getCategoryConfig(business.category);
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -78,13 +78,13 @@ export default async function DashboardPage() {
 
   const stats = [
     {
-      label: `${terminology.appointmentTermPlural} היום`,
+      label: `${catConfig.appointmentTermPlural} היום`,
       value: todayAppointments,
       icon: Calendar,
       color: "bg-blue-50 text-blue-600",
     },
     {
-      label: `סה״כ ${terminology.clientTermPlural}`,
+      label: `סה״כ ${catConfig.clientTermPlural}`,
       value: totalClients,
       icon: Users,
       color: "bg-green-50 text-green-600",
@@ -144,7 +144,7 @@ export default async function DashboardPage() {
           {recentAppointments.length === 0 ? (
             <div className="text-center py-8 text-gray-400">
               <Clock className="w-10 h-10 mx-auto mb-2 opacity-50" />
-              <p>אין {terminology.appointmentTermPlural} קרובים</p>
+              <p>אין {catConfig.appointmentTermPlural} קרובים</p>
             </div>
           ) : (
             <div className="space-y-3">
@@ -192,14 +192,14 @@ export default async function DashboardPage() {
               className="flex flex-col items-center gap-2 p-4 rounded-xl bg-primary-50 text-primary-700 hover:bg-primary-100 transition"
             >
               <Calendar className="w-6 h-6" />
-              <span className="text-sm font-medium">{terminology.appointmentTerm} חדש</span>
+              <span className="text-sm font-medium">{catConfig.appointmentTerm} חדש</span>
             </Link>
             <Link
               href="/clients"
               className="flex flex-col items-center gap-2 p-4 rounded-xl bg-green-50 text-green-700 hover:bg-green-100 transition"
             >
               <Users className="w-6 h-6" />
-              <span className="text-sm font-medium">{terminology.clientTerm} חדש</span>
+              <span className="text-sm font-medium">{catConfig.clientTerm} חדש</span>
             </Link>
             <Link
               href="/services"

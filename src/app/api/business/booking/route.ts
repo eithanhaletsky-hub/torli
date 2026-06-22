@@ -7,7 +7,9 @@ export async function PUT(req: Request) {
   const session = await getServerSession(authOptions);
   if (!session) return NextResponse.json({ error: "לא מורשה" }, { status: 401 });
 
-  const business = await prisma.business.findFirst();
+  const business = await prisma.business.findFirst({
+    where: { ownerId: session.user.id },
+  });
   if (!business) return NextResponse.json({ error: "עסק לא נמצא" }, { status: 404 });
 
   const data = await req.json();
