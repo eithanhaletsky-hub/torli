@@ -26,9 +26,7 @@ export const config = {
     successMessage: "התור נקבע בהצלחה!",
   },
 
-  defaultServices: [
-    { name: "שירות לדוגמה", duration: 60, price: 200, color: "#6366f1" },
-  ],
+  defaultServices: [],
 
   businessHours: [
     { dayOfWeek: 0, startTime: "09:00", endTime: "18:00", isOpen: true },
