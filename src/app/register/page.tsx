@@ -61,7 +61,7 @@ export default function RegisterPage() {
               type="text"
               required
               className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition"
-              placeholder="ישראל ישראלי"
+              placeholder="למשל: שרה לוי"
             />
           </div>
 
@@ -72,7 +72,7 @@ export default function RegisterPage() {
             <select
               name="category"
               required
-              defaultValue="consulting"
+              defaultValue="tutoring"
               className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition bg-white"
             >
               {Object.values(CATEGORIES).map((cat) => (
@@ -92,7 +92,7 @@ export default function RegisterPage() {
               type="text"
               required
               className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition"
-              placeholder="שם העסק שלך"
+              placeholder="למשל: שרה לוי - מורה פרטית"
             />
           </div>
 
