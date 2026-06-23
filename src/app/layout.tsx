@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "תורלי - מערכת ניהול תורים לעסקים",
-  description: "מערכת ניהול תורים, לקוחות ועסק - הכל במקום אחד",
+  title: "תורלי - מערכת ניהול שיעורים למורים פרטיים",
+  description: "מערכת הזמנת שיעורים, ניהול תלמידים ויומן חכם למורים פרטיים בישראל",
 };
 
 export default function RootLayout({
