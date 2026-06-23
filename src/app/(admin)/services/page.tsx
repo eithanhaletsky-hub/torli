@@ -58,7 +58,7 @@ export default function ServicesPage() {
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("למחוק את השירות?")) return;
+    if (!confirm("למחוק את המקצוע?")) return;
     await fetch(`/api/services/${id}`, { method: "DELETE" });
     await fetchServices();
   }
@@ -84,9 +84,9 @@ export default function ServicesPage() {
     <div className="max-w-4xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold">שירותים</h1>
+          <h1 className="text-2xl font-bold">מקצועות</h1>
           <p className="text-gray-500 text-sm mt-1">
-            נהל את השירותים שהעסק שלך מציע
+            נהל את המקצועות שאתה מלמד
           </p>
         </div>
         <button
@@ -97,27 +97,27 @@ export default function ServicesPage() {
           className="flex items-center gap-2 px-4 py-2.5 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition text-sm font-medium"
         >
           <Plus className="w-4 h-4" />
-          שירות חדש
+          מקצוע חדש
         </button>
       </div>
 
       {showForm && (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
           <h2 className="text-lg font-semibold mb-4">
-            {editing ? "עריכת שירות" : "שירות חדש"}
+            {editing ? "עריכת מקצוע" : "מקצוע חדש"}
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  שם השירות
+                  שם המקצוע
                 </label>
                 <input
                   name="name"
                   required
                   defaultValue={editing?.name}
                   className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
-                  placeholder="תספורת גברים"
+                  placeholder="מתמטיקה"
                 />
               </div>
               <div>
@@ -128,7 +128,7 @@ export default function ServicesPage() {
                   name="description"
                   defaultValue={editing?.description || ""}
                   className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
-                  placeholder="כולל שטיפה ועיצוב"
+                  placeholder="כיתות ט׳-י״ב, הכנה לבגרות"
                 />
               </div>
               <div>
@@ -196,10 +196,10 @@ export default function ServicesPage() {
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-12 text-center">
           <GripVertical className="w-12 h-12 text-gray-300 mx-auto mb-3" />
           <h3 className="text-lg font-medium text-gray-600">
-            אין שירותים עדיין
+            אין מקצועות עדיין
           </h3>
           <p className="text-gray-400 text-sm mt-1">
-            הוסף את השירות הראשון שלך כדי להתחיל
+            הוסף את המקצוע הראשון שאתה מלמד
           </p>
         </div>
       ) : (

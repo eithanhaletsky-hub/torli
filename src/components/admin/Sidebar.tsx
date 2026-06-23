@@ -21,8 +21,8 @@ import { useState } from "react";
 const navItems = [
   { href: "/dashboard", label: "דשבורד", icon: LayoutDashboard },
   { href: "/calendar", label: "יומן", icon: Calendar },
-  { href: "/clients", label: "לקוחות", icon: Users },
-  { href: "/services", label: "שירותים", icon: Scissors },
+  { href: "/clients", label: "תלמידים", icon: Users },
+  { href: "/services", label: "מקצועות", icon: Scissors },
   { href: "/booking-editor", label: "דף הזמנה", icon: FileEdit },
   { href: "/settings", label: "הגדרות", icon: Settings },
 ];

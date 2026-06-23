@@ -92,7 +92,7 @@ export default function SettingsPage() {
 
   return (
     <div className="max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">הגדרות העסק</h1>
+      <h1 className="text-2xl font-bold mb-6">הגדרות</h1>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
@@ -110,14 +110,14 @@ export default function SettingsPage() {
         </div>
 
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-          <h2 className="text-lg font-semibold mb-4">פרטי העסק</h2>
+          <h2 className="text-lg font-semibold mb-4">פרטי ההוראה</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">שם העסק</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">שם (כפי שיוצג לתלמידים)</label>
               <input name="name" defaultValue={business.name} required className="w-full px-4 py-2.5 border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-primary-500" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">סוג העסק</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">תחום הוראה</label>
               <select name="category" defaultValue={business.category} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-primary-500 bg-white">
                 {Object.values(CATEGORIES).map((cat) => (
                   <option key={cat.id} value={cat.id}>{cat.icon} {cat.label}</option>
@@ -147,7 +147,7 @@ export default function SettingsPage() {
           <h2 className="text-lg font-semibold mb-4">קישור הזמנה ו-QR Code</h2>
           <div className="flex flex-col md:flex-row gap-6">
             <div className="flex-1">
-              <p className="text-sm text-gray-500 mb-3">שתף את הקישור הזה עם הלקוחות שלך כדי שיוכלו לקבוע תורים:</p>
+              <p className="text-sm text-gray-500 mb-3">שתף את הקישור הזה עם תלמידים והורים כדי שיוכלו לקבוע שיעורים:</p>
               <div className="flex gap-2">
                 <code className="flex-1 bg-gray-50 px-4 py-2.5 rounded-xl text-sm border border-gray-200 truncate" dir="ltr">
                   {getBookingUrl()}
@@ -161,7 +161,7 @@ export default function SettingsPage() {
                   {copied ? "הועתק!" : "העתק"}
                 </button>
               </div>
-              <p className="text-xs text-gray-400 mt-2">הדבק בהודעת וואטסאפ, אינסטגרם, פייסבוק או בכל מקום אחר</p>
+              <p className="text-xs text-gray-400 mt-2">שלח בוואטסאפ להורים או לתלמידים</p>
             </div>
             <div className="flex flex-col items-center gap-2">
               <img src={qrUrl} alt="QR Code" className="w-[150px] h-[150px] rounded-xl border border-gray-200" />
@@ -177,7 +177,7 @@ export default function SettingsPage() {
         </div>
 
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-          <h2 className="text-lg font-semibold mb-4">שעות פעילות</h2>
+          <h2 className="text-lg font-semibold mb-4">שעות הוראה</h2>
           <div className="space-y-3">
             {business.businessHours.map((bh) => (
               <div key={bh.dayOfWeek} className="flex items-center gap-4">
@@ -207,7 +207,7 @@ export default function SettingsPage() {
                     />
                   </div>
                 ) : (
-                  <span className="text-sm text-gray-400">סגור</span>
+                  <span className="text-sm text-gray-400">לא מלמד</span>
                 )}
               </div>
             ))}
@@ -223,14 +223,14 @@ export default function SettingsPage() {
               className="flex items-center gap-2 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition text-sm font-medium"
             >
               <Download className="w-4 h-4" />
-              ייצוא תורים
+              ייצוא שיעורים
             </a>
             <a
               href="/api/export?type=clients"
               className="flex items-center gap-2 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition text-sm font-medium"
             >
               <Download className="w-4 h-4" />
-              ייצוא לקוחות
+              ייצוא תלמידים
             </a>
           </div>
         </div>

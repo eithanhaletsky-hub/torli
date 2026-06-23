@@ -68,7 +68,7 @@ export default function ClientsPage() {
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("למחוק את הלקוח?")) return;
+    if (!confirm("למחוק את התלמיד?")) return;
     await fetch(`/api/clients/${id}`, { method: "DELETE" });
     await fetchClients();
     if (selected?.id === id) setSelected(null);
@@ -114,12 +114,12 @@ export default function ClientsPage() {
               <p className="text-3xl font-bold text-primary-600">
                 {selected._count.appointments}
               </p>
-              <p className="text-xs text-gray-500">ביקורים</p>
+              <p className="text-xs text-gray-500">שיעורים</p>
             </div>
           </div>
         </div>
 
-        <h2 className="text-lg font-semibold mb-3">היסטוריית תורים</h2>
+        <h2 className="text-lg font-semibold mb-3">היסטוריית שיעורים</h2>
         <div className="space-y-2">
           {selected.appointments.map((apt) => (
             <div
@@ -149,7 +149,7 @@ export default function ClientsPage() {
             </div>
           ))}
           {selected.appointments.length === 0 && (
-            <p className="text-center text-gray-400 py-8">אין תורים עדיין</p>
+            <p className="text-center text-gray-400 py-8">אין שיעורים עדיין</p>
           )}
         </div>
       </div>
@@ -160,8 +160,8 @@ export default function ClientsPage() {
     <div className="max-w-4xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold">לקוחות</h1>
-          <p className="text-gray-500 text-sm mt-1">{clients.length} לקוחות</p>
+          <h1 className="text-2xl font-bold">תלמידים</h1>
+          <p className="text-gray-500 text-sm mt-1">{clients.length} תלמידים</p>
         </div>
         <button
           onClick={() => {
@@ -171,7 +171,7 @@ export default function ClientsPage() {
           className="flex items-center gap-2 px-4 py-2.5 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition text-sm font-medium"
         >
           <Plus className="w-4 h-4" />
-          לקוח חדש
+          תלמיד חדש
         </button>
       </div>
 
@@ -189,7 +189,7 @@ export default function ClientsPage() {
       {showForm && (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
           <h2 className="text-lg font-semibold mb-4">
-            {editing ? "עריכת לקוח" : "לקוח חדש"}
+            {editing ? "עריכת תלמיד" : "תלמיד חדש"}
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -256,7 +256,7 @@ export default function ClientsPage() {
       ) : clients.length === 0 ? (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-12 text-center">
           <Users className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-          <h3 className="text-lg font-medium text-gray-600">אין לקוחות עדיין</h3>
+          <h3 className="text-lg font-medium text-gray-600">אין תלמידים עדיין</h3>
         </div>
       ) : (
         <div className="space-y-2">
@@ -277,7 +277,7 @@ export default function ClientsPage() {
               </div>
               <div className="flex items-center gap-3">
                 <span className="text-sm text-gray-400">
-                  {client._count.appointments} תורים
+                  {client._count.appointments} שיעורים
                 </span>
                 <button
                   onClick={(e) => {

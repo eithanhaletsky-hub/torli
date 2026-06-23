@@ -109,7 +109,7 @@ export default async function DashboardPage() {
         <h1 className="text-2xl font-bold text-gray-900">
           שלום, {business.owner.name} 👋
         </h1>
-        <p className="text-gray-500 mt-1">הנה סיכום העסק שלך</p>
+        <p className="text-gray-500 mt-1">הנה סיכום השיעורים שלך</p>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
@@ -133,7 +133,7 @@ export default async function DashboardPage() {
       <div className="grid lg:grid-cols-2 gap-6">
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">תורים קרובים</h2>
+            <h2 className="text-lg font-semibold">שיעורים קרובים</h2>
             <Link
               href="/calendar"
               className="text-sm text-primary-600 hover:underline"
@@ -206,22 +206,22 @@ export default async function DashboardPage() {
               className="flex flex-col items-center gap-2 p-4 rounded-xl bg-purple-50 text-purple-700 hover:bg-purple-100 transition"
             >
               <AlertCircle className="w-6 h-6" />
-              <span className="text-sm font-medium">שירות חדש</span>
+              <span className="text-sm font-medium">מקצוע חדש</span>
             </Link>
             <Link
               href="/settings"
               className="flex flex-col items-center gap-2 p-4 rounded-xl bg-amber-50 text-amber-700 hover:bg-amber-100 transition"
             >
               <Clock className="w-6 h-6" />
-              <span className="text-sm font-medium">שעות פעילות</span>
+              <span className="text-sm font-medium">שעות הוראה</span>
             </Link>
           </div>
 
           {totalServices === 0 && (
             <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-xl">
               <p className="text-sm text-yellow-800">
-                <strong>טיפ:</strong> התחל בהוספת השירותים שלך כדי שלקוחות יוכלו
-                להזמין תורים.
+                <strong>טיפ:</strong> התחל בהוספת המקצועות שאתה מלמד כדי שתלמידים יוכלו
+                לקבוע שיעורים.
               </p>
             </div>
           )}
