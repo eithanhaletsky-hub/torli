@@ -7,7 +7,7 @@ import {
   LayoutDashboard,
   Calendar,
   Users,
-  Scissors,
+  BookOpen,
   FileEdit,
   Settings,
   LogOut,
@@ -22,7 +22,7 @@ const navItems = [
   { href: "/dashboard", label: "דשבורד", icon: LayoutDashboard },
   { href: "/calendar", label: "יומן", icon: Calendar },
   { href: "/clients", label: "תלמידים", icon: Users },
-  { href: "/services", label: "מקצועות", icon: Scissors },
+  { href: "/services", label: "מקצועות", icon: BookOpen },
   { href: "/booking-editor", label: "דף הזמנה", icon: FileEdit },
   { href: "/settings", label: "הגדרות", icon: Settings },
 ];
