@@ -11,6 +11,18 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "כל השדות נדרשים" }, { status: 400 });
     }
 
+    if (typeof password !== "string" || password.length < 6) {
+      return NextResponse.json({ error: "הסיסמה חייבת להכיל לפחות 6 תווים" }, { status: 400 });
+    }
+
+    if (typeof email !== "string" || !email.includes("@") || email.length > 254) {
+      return NextResponse.json({ error: "אימייל לא תקין" }, { status: 400 });
+    }
+
+    const sanitize = (s: string) => s.trim().slice(0, 200);
+    const safeName = sanitize(name);
+    const safeBusinessName = sanitize(businessName);
+
     const existing = await prisma.user.findUnique({ where: { email } });
     if (existing) {
       return NextResponse.json(
@@ -20,7 +32,7 @@ export async function POST(req: Request) {
     }
 
     const passwordHash = await bcrypt.hash(password, 12);
-    let slug = generateSlug(businessName);
+    let slug = generateSlug(safeBusinessName);
 
     const slugExists = await prisma.business.findUnique({ where: { slug } });
     if (slugExists) {
@@ -29,12 +41,12 @@ export async function POST(req: Request) {
 
     const user = await prisma.user.create({
       data: {
-        name,
-        email,
+        name: safeName,
+        email: email.trim().toLowerCase(),
         passwordHash,
         business: {
           create: {
-            name: businessName,
+            name: safeBusinessName,
             slug,
             category: category || "consulting",
             businessHours: {

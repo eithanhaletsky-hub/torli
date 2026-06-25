@@ -39,7 +39,13 @@ export async function POST(req: Request) {
   if (!businessId)
     return NextResponse.json({ error: "לא מורשה" }, { status: 401 });
 
-  const data = await req.json();
+  const raw = await req.json();
+  const data = {
+    ...raw,
+    clientName: typeof raw.clientName === "string" ? raw.clientName.trim().slice(0, 200) : "",
+    clientPhone: typeof raw.clientPhone === "string" ? raw.clientPhone.trim().slice(0, 20) : "",
+    notes: typeof raw.notes === "string" ? raw.notes.trim().slice(0, 1000) : null,
+  };
   const service = await prisma.service.findFirst({
     where: { id: data.serviceId, businessId },
   });

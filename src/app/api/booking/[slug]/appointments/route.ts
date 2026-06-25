@@ -12,7 +12,10 @@ export async function POST(
     return NextResponse.json({ error: "עסק לא נמצא" }, { status: 404 });
 
   const data = await req.json();
-  const { serviceId, date, clientName, clientPhone, notes } = data;
+  const { serviceId, date } = data;
+  const clientName = typeof data.clientName === "string" ? data.clientName.trim().slice(0, 200) : "";
+  const clientPhone = typeof data.clientPhone === "string" ? data.clientPhone.trim().slice(0, 20) : "";
+  const notes = typeof data.notes === "string" ? data.notes.trim().slice(0, 1000) : null;
 
   if (!serviceId || !date || !clientName || !clientPhone)
     return NextResponse.json({ error: "חסרים שדות" }, { status: 400 });
